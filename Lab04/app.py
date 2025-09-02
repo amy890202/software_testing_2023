@@ -6,12 +6,20 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.chrome.options import Options
 import time
 from selenium.webdriver.common.by import By
-options = Options()
-options.add_argument('--headless')
-options.add_argument('--window-size=1920,1080')
-options.add_argument('--disable-gpu')
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+# options = Options()
+# options.add_argument('--headless')
+# options.add_argument('--window-size=1920,1080')
+# options.add_argument('--disable-gpu')
+# driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
+
+service = Service("/usr/bin/chromedriver")
+options = webdriver.ChromeOptions()
+options.add_argument("--headless")  # CI 環境必須 headless
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+
+driver = webdriver.Chrome(service=service, options=options)
 #driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 driver.get("https://www.nycu.edu.tw/")
 driver.maximize_window()

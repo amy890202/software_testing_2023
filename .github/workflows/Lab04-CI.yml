@@ -1,9 +1,17 @@
 name: Lab04 CI
 run-name: Lab04 CI is testing out GitHub Actions 🚀
-on: [push]
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:  # 手動觸發
 
 jobs:
-  Explore-GitHub-Actions:
+  lab04_ci:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -11,9 +19,10 @@ jobs:
         python-version: ["3.8"]
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
@@ -23,6 +32,7 @@ jobs:
           cd Lab04
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install selenium webdriver-manager
 
       - name: Install Google Chrome
         run: |
@@ -31,8 +41,7 @@ jobs:
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -f install -y
 
-      - name: Run selenium code
+      - name: Run Selenium code
         run: |
           cd Lab04
-          python3 -m pip install webdriver-manager selenium
           python3 app.py

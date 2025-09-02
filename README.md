@@ -12,7 +12,7 @@
 
 ![Lab03 CI](https://github.com/amy890202/software_testing_2023/actions/workflows/Lab03-CI.yml/badge.svg?branch=main)
 
-![Lab04 CI](https://github.com/amy890202/software_testing_2023/actions/workflows/Lab04-CI.yml/badge.svg?branch=main)
+![Lab04 CI](https://github.com/amy890202/software_testing_2023/actions/workflows/Lab04-CI.yml/badge.svg)
 
 ![Lab05 CI](https://github.com/amy890202/software_testing_2023/actions/workflows/Lab05-CI.yml/badge.svg?branch=main)
 

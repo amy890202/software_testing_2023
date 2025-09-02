@@ -24,18 +24,33 @@ print("=== DEBUG: page_source start ===")
 print(driver.page_source[:1000])
 print("=== DEBUG: page_source end ===")
 
-# 等待第二個 menu link 出現並點擊
-el = WebDriverWait(driver, 20).until(
-    EC.element_to_be_clickable((By.CSS_SELECTOR, "nav ul li:nth-child(2) a"))
+# 等待 <body> 載入
+WebDriverWait(driver, 30).until(
+    EC.presence_of_element_located((By.TAG_NAME, "body"))
 )
-el.click()
+
+# 嘗試找到第二個 menu link
+try:
+    el = WebDriverWait(driver, 30).until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, "nav ul li:nth-child(2) a"))
+    )
+    el.click()
+except Exception as e:
+    print("⚠️ Menu element not found:", e)
+    driver.quit()
+    exit(1)
 
 # 等待第一篇文章的 su-post 出現並點擊
-a = WebDriverWait(driver, 20).until(
-    EC.presence_of_element_located((By.CLASS_NAME, "su-post"))
-)
-b = a.find_element(By.CSS_SELECTOR, ".su-post > a")
-b.click()
+try:
+    a = WebDriverWait(driver, 30).until(
+        EC.presence_of_element_located((By.CLASS_NAME, "su-post"))
+    )
+    b = a.find_element(By.CSS_SELECTOR, ".su-post > a")
+    b.click()
+except Exception as e:
+    print("⚠️ Article element not found:", e)
+    driver.quit()
+    exit(1)
 
 # 抓取文章標題
 title = WebDriverWait(driver, 20).until(

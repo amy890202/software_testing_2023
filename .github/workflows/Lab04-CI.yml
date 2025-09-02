@@ -1,14 +1,5 @@
 name: Lab04 CI
-run-name: Lab04 CI is testing out GitHub Actions 🚀
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch:  # 手動觸發
+on: [push]
 
 jobs:
   Explore-GitHub-Actions:
@@ -25,13 +16,14 @@ jobs:
         run: |
           cd Lab04
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Install Chrome and ChromeDriver
         run: |
           sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
-          sudo apt-get install -y chromium-chromedriver
+          sudo apt-get install -y google-chrome-stable chromium-chromedriver
+          which google-chrome
+          google-chrome --version
           which chromedriver
           chromedriver --version
 
@@ -39,4 +31,3 @@ jobs:
         run: |
           cd Lab04
           python3 app.py
-
